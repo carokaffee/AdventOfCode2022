@@ -10,9 +10,12 @@ def get_day_number() -> int:
     return int(day_no)
 
 
-def load_data(use_test_input: bool, sep: str) -> List[str]:
+def load_data(use_test_input: bool, sep: str, strip: bool = True) -> List[str]:
     day_no = get_day_number()
     filename = get_filename(day_no, use_test_input)
     download_data(day_no)
     with open(filename) as f:
-        return f.read().strip().split(sep)
+        if strip:
+            return f.read().strip().split(sep)
+        else:
+            return f.read().split(sep)
