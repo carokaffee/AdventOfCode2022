@@ -1,6 +1,6 @@
 from src.tools.loader import load_data
 
-TESTING = False
+TESTING = True
 
 
 def print_screen(input_string):
