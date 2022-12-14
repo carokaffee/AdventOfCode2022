@@ -1,6 +1,6 @@
 # :star: Advent of Code 2022 :star:
 
-My days for AoC 2022 written in Python.
+My solutions for AoC 2022 written in Python.
 
 ## Overview
 
