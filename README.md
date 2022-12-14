@@ -4,7 +4,7 @@ My solutions for AoC 2022 written in Python.
 
 ## Overview
 
-| Day :christmas_tree: | Problem | day | | Day :christmas_tree: | Problem | day |
+| Day :christmas_tree: | Problem | Solution | | Day :christmas_tree: | Problem | Solution |
 | :---: | --- | --- | --- | :---: | --- | --- |
 | 01 | [Calorie Counting](https://adventofcode.com/2022/1) | [day01.py](src/solutions/day01/day_nice01.py) || 14 | [Regolith Reservoir](https://adventofcode.com/2022/14) | [day14.py](src/solutions/day14.py) |
 | 02 | [Rock Paper Scissors](https://adventofcode.com/2022/2) | [day02.py](src/solutions/day02.py) || 15 | [](https://adventofcode.com/2022/15) | [](src/solutions/day15.py) |
