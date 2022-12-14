@@ -1,7 +1,5 @@
-session_name.txt
 .git
 .vscode
-*input.txt
 *__pycache__
-meili
+session_name.txt
 token.txt
