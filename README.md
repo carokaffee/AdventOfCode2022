@@ -6,7 +6,7 @@ My solutions for AoC 2022 written in Python.
 
 | Day :christmas_tree: | Problem | Solution | | Day :christmas_tree: | Problem | Solution |
 | :---: | --- | --- | --- | :---: | --- | --- |
-| 01 | [Calorie Counting](https://adventofcode.com/2022/day/1) | [day01.py](src/solutions/day01/day_nice01.py) || 14 | [Regolith Reservoir](https://adventofcode.com/2022/day/14) | [day14.py](src/solutions/day14.py) |
+| 01 | [Calorie Counting](https://adventofcode.com/2022/day/1) | [day01.py](src/solutions/day01.py) || 14 | [Regolith Reservoir](https://adventofcode.com/2022/day/14) | [day14.py](src/solutions/day14.py) |
 | 02 | [Rock Paper Scissors](https://adventofcode.com/2022/day/2) | [day02.py](src/solutions/day02.py) || 15 | [Beacon Exclusion Zone](https://adventofcode.com/2022/day/15) | [day15.py](src/solutions/day15.py) |
 | 03 | [Rucksack Reorganization](https://adventofcode.com/2022/day/3) | [day03.py](src/solutions/day03.py) || 16 | [Proboscidea Volcanium](https://adventofcode.com/2022/day/16) | [day16.py](src/solutions/day16.py) |
 | 04 | [Camp Cleanup](https://adventofcode.com/2022/day/4) | [day04.py](src/solutions/day04.py) || 17 | [Pyroclastic Flow](https://adventofcode.com/2022/day/17) | [day17.py](src/solutions/day17.py) |
