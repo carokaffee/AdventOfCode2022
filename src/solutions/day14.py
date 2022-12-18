@@ -1,5 +1,4 @@
 from src.tools.loader import load_data
-import time
 import numpy as np
 
 TESTING = False
@@ -74,7 +73,4 @@ if __name__ == "__main__":
     # PART 2
     # test:      93
     # answer: 22646
-    start_time = time.time()
     print(simulate_sand(bottom=True))
-    end_time = time.time()
-    print(end_time - start_time)
