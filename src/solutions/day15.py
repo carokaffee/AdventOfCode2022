@@ -1,5 +1,6 @@
 from src.tools.loader import load_data
 from tqdm import tqdm
+from itertools import combinations
 
 
 TESTING = False
@@ -23,8 +24,8 @@ def manhattan_dist(p1, p2):
 
 
 def is_within_distance(p1, p2, dist):
-    dist_p = manhattan_dist(p1, p2)
-    return dist_p <= dist
+    dist_p1_p2 = manhattan_dist(p1, p2)
+    return dist_p1_p2 <= dist
 
 
 def get_dimensions():
@@ -42,8 +43,9 @@ def get_dimensions():
 def possible_beacons_in_row(row):
     occupied = set(sensors_beacons.values())
     counter = 0
+    min_x, max_x, max_dist = get_dimensions()
 
-    for x in range(min_x - max_dist, max_x + 1 + max_dist):
+    for x in tqdm(range(min_x - max_dist, max_x + 1 + max_dist), "go through row"):
         is_in_distance = False
         for sensor, dist in dist_to_closest_beacon.items():
             if is_within_distance(sensor, (x, row), dist) and (x, row) not in occupied:
@@ -54,25 +56,14 @@ def possible_beacons_in_row(row):
     return counter
 
 
-if __name__ == "__main__":
-    data = load_data(TESTING, "\n")
-    sensors_beacons = parse_input(data)
-    dist_to_closest_beacon = {
-        s: manhattan_dist(s, b) for s, b in sensors_beacons.items()
-    }
-
-    min_x, max_x, max_dist = get_dimensions()
-
-    print(possible_beacons_in_row(2000000))
-
-    DIM = 4000000
-
-    possible_points = set()
-    for sensor, dist in tqdm(dist_to_closest_beacon.items()):
+def tuning_frequency(DIM):
+    possible_points = {sensor: set() for sensor in sensors_beacons.keys()}
+    for sensor, dist in tqdm(dist_to_closest_beacon.items(), "store feasible edges"):
         sens_x, sens_y = sensor
+        new_possible_points = set()
         for x in range(dist + 2):
             y = dist + 1 - x
-            possible_points.update(
+            new_possible_points.update(
                 set(
                     (
                         (sens_x + x, sens_y + y),
@@ -82,21 +73,48 @@ if __name__ == "__main__":
                     )
                 )
             )
-    print(len(possible_points))
+        for x, y in new_possible_points:
+            if x >= 0 and x <= DIM and y >= 0 and y <= DIM:
+                possible_points[sensor].add((x, y))
 
-    real_possible_points = set()
-    for x, y in tqdm(possible_points):
-        if x >= 0 and x <= DIM and y >= 0 and y <= DIM:
-            real_possible_points.add((x, y))
+    intersection_points = set()
+    for sensor1, sensor2 in tqdm(
+        combinations(sensors_beacons.keys(), 2),
+        "find intersections",
+        len(sensors_beacons.keys()) * (len(sensors_beacons.keys()) - 1) // 2,
+    ):
+        intersecting = possible_points[sensor1].intersection(possible_points[sensor2])
+        if len(intersecting) <= 2:
+            intersection_points.update(intersecting)
 
-    print(len(real_possible_points))
-
-    for x, y in tqdm(real_possible_points):
+    for x, y in tqdm(intersection_points, "check all possible points"):
         is_in_distance = False
         for sensor, dist in dist_to_closest_beacon.items():
-            possibility = is_within_distance(sensor, (x, y), dist)
-            if possibility:
-                is_in_distance = True
+            is_in_distance = is_in_distance or is_within_distance(sensor, (x, y), dist)
 
         if not is_in_distance:
-            print(x, y)
+            only_intersection = (x, y)
+            break
+
+    return only_intersection[0] * 4000000 + only_intersection[1]
+
+
+if __name__ == "__main__":
+    data = load_data(TESTING, "\n")
+    sensors_beacons = parse_input(data)
+    dist_to_closest_beacon = {
+        s: manhattan_dist(s, b) for s, b in sensors_beacons.items()
+    }
+
+    ROW = 10 if TESTING else 2000000
+    DIM = 20 if TESTING else 4000000
+
+    # PART 1
+    # test:        26
+    # answer: 6078701
+    print("Solution for part 1:", possible_beacons_in_row(ROW))
+
+    # PART 2
+    # test:         56000011
+    # answer: 12567351400528
+    print("Solution for part 2:", tuning_frequency(DIM))
