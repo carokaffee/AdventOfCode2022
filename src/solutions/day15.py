@@ -18,59 +18,52 @@ def parse_input(data):
     return sensors_beacons
 
 
-def manhattan_distance(p1, p2):
+def manhattan_dist(p1, p2):
     return abs(p1[0] - p2[0]) + abs(p1[1] - p2[1])
 
 
 def is_within_distance(p1, p2, dist):
-    dist_p = manhattan_distance(p1, p2)
+    dist_p = manhattan_dist(p1, p2)
     return dist_p <= dist
+
+
+def get_dimensions():
+    min_x = min(
+        [x for x, _ in set(sensors_beacons.keys()).union(sensors_beacons.values())]
+    )
+    max_x = max(
+        [x for x, _ in set(sensors_beacons.keys()).union(sensors_beacons.values())]
+    )
+    max_dist = max([y for y in dist_to_closest_beacon.values()])
+
+    return min_x, max_x, max_dist
+
+
+def possible_beacons_in_row(row):
+    occupied = set(sensors_beacons.values())
+    counter = 0
+
+    for x in range(min_x - max_dist, max_x + 1 + max_dist):
+        is_in_distance = False
+        for sensor, dist in dist_to_closest_beacon.items():
+            if is_within_distance(sensor, (x, row), dist) and (x, row) not in occupied:
+                is_in_distance = True
+
+        counter += is_in_distance
+
+    return counter
 
 
 if __name__ == "__main__":
     data = load_data(TESTING, "\n")
     sensors_beacons = parse_input(data)
     dist_to_closest_beacon = {
-        sensor: manhattan_distance(sensor, beacon)
-        for sensor, beacon in sensors_beacons.items()
+        s: manhattan_dist(s, b) for s, b in sensors_beacons.items()
     }
-    # print(closest_beacon)
-    # print(dist_to_closest_beacon)
 
-    min_x = min(
-        [x for x, y in set(sensors_beacons.keys()).union(sensors_beacons.values())]
-    )
-    min_y = min(
-        [y for x, y in set(sensors_beacons.keys()).union(sensors_beacons.values())]
-    )
-    max_x = max(
-        [x for x, y in set(sensors_beacons.keys()).union(sensors_beacons.values())]
-    )
-    max_y = max(
-        [y for x, y in set(sensors_beacons.keys()).union(sensors_beacons.values())]
-    )
-    max_dist = max([y for y in dist_to_closest_beacon.values()])
-    print(min_x, min_y, max_x, max_y)
+    min_x, max_x, max_dist = get_dimensions()
 
-    Y_ROW = 20
-    occupied = set(sensors_beacons.values())
-
-    counter = 0
-    """
-    for x in range(min_x - max_dist, max_x + 1 + max_dist):
-        is_in_distance = False
-        for sensor, dist in dist_to_closest_beacon.items():
-            possibility = is_within_distance(sensor, (x, Y_ROW), dist)
-            if possibility:
-                if (x, Y_ROW) not in occupied:
-                    is_in_distance = True
-            # print(dist, manhattan_distance((x, Y_ROW), sensor))
-
-        if is_in_distance:
-            # print(x)
-            counter += 1
-            # print()
-    """
+    print(possible_beacons_in_row(2000000))
 
     DIM = 4000000
 
