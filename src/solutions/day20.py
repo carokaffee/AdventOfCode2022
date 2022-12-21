@@ -3,77 +3,39 @@ from src.tools.loader import load_data
 TESTING = False
 
 
+def shuffle_numbers(numbers, times, multiplier):
+    numbers = [num * multiplier for num in numbers]
+    modulo = len(numbers)
+    shuffled_ids = [i for i in range(modulo)]
+
+    for _ in range(times):
+        for id in range(modulo):
+            idx = shuffled_ids.index(id)
+            shift = numbers[id]
+            shuffled_ids.pop(idx)
+            shuffled_ids.insert((idx + shift) % (modulo - 1), id)
+
+    zero_id = numbers.index(0)
+    zero_pos = shuffled_ids.index(zero_id)
+    sum_of_grove_coords = 0
+
+    for i in range(3):
+        id = shuffled_ids[(zero_pos + 1000 * (i + 1)) % modulo]
+        sum_of_grove_coords += numbers[id]
+
+    return sum_of_grove_coords
+
+
 if __name__ == "__main__":
     data = load_data(TESTING, "\n")
     numbers = list(map(int, data))
 
-    numbers = [num * 811589153 for num in numbers]
+    # PART 1
+    # test:       3
+    # answer: 11123
+    print(shuffle_numbers(numbers, 1, 1))
 
-    modulo = len(numbers)
-    id_list = [i for i in range(modulo)]
-    for _ in range(10):
-        for i in range(modulo):
-            num_idx = id_list.index(i)
-            shift = numbers[i]
-            id_list.pop(num_idx)
-            id_list.insert((num_idx + shift) % (modulo - 1), i)
-
-    # print(id_list)
-
-    zero_id = numbers.index(0)
-    zero_id = id_list.index(zero_id)
-
-    a = id_list[(zero_id + 1000) % modulo]
-    a = numbers[a]
-    b = id_list[(zero_id + 2000) % modulo]
-    b = numbers[b]
-    c = id_list[(zero_id + 3000) % modulo]
-    c = numbers[c]
-
-    print(a, b, c)
-    print(a + b + c)
-
-    """
-    # numbers = [(i, numbers[i]) for i in range(len(numbers))]
-    modulo = len(numbers)
-    id_values = {i: numbers[i] for i in range(modulo)}
-    id_position = {i: i for i in range(modulo)}
-    id_new_pos = {i: i for i in range(modulo)}
-
-    for id, _ in tqdm(id_position.items()):
-        num = numbers[id_new_pos[id]]
-        pos = id_new_pos[id]
-        if num > 0:
-            for i in range(1, num + 1):
-                numbers[(pos + i - 1) % modulo], numbers[(pos + i) % modulo] = (
-                    numbers[(pos + i) % modulo],
-                    numbers[(pos + i - 1) % modulo],
-                )
-                other_id = [
-                    k
-                    for k, v in id_values.items()
-                    if v == numbers[(pos + i - 1) % modulo]
-                ]
-                id_new_pos[id] = (id_new_pos[id] + 1) % modulo
-                id_new_pos[other_id[0]] = (id_new_pos[other_id[0]] - 1) % modulo
-        elif num < 0:
-            for i in range(1, abs(num) + 1):
-                numbers[(pos - i + 1) % modulo], numbers[(pos - i) % modulo] = (
-                    numbers[(pos - i) % modulo],
-                    numbers[(pos - i + 1) % modulo],
-                )
-                other_id = [
-                    k
-                    for k, v in id_values.items()
-                    if v == numbers[(pos - i + 1) % modulo]
-                ]
-                id_new_pos[id] = (id_new_pos[id] - 1) % modulo
-                id_new_pos[other_id[0]] = (id_new_pos[other_id[0]] + 1) % modulo
-
-    pos_zero = [i for i in range(modulo) if numbers[i] == 0][0]
-    a = numbers[(pos_zero + 1000) % modulo]
-    b = numbers[(pos_zero + 2000) % modulo]
-    c = numbers[(pos_zero + 3000) % modulo]
-    print(a, b, c)
-    print(a + b + c)
-    """
+    # PART 2
+    # test:      1623178306
+    # answer: 4248669215955
+    print(shuffle_numbers(numbers, 10, 811589153))
