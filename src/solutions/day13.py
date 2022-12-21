@@ -9,22 +9,7 @@ def parse_input(data):
     for pair in data:
         a, b = pair.split("\n")
         for p in a + b:
-            assert p in [  # safety first
-                "0",
-                "1",
-                "2",
-                "3",
-                "4",
-                "5",
-                "6",
-                "7",
-                "8",
-                "9",
-                "[",
-                "]",
-                ",",
-                " ",
-            ]
+            assert p in "0123456789[], "  # safety first
         result.append(eval(a))
         result.append(eval(b))
     return result
