@@ -17,5 +17,5 @@ My solutions for AoC 2022 written in Python.
 | 09 | [Rope Bridge](https://adventofcode.com/2022/day/9) | [day09.py](src/solutions/day09.py) || 22 | [Monkey Map](https://adventofcode.com/2022/day/22) | [day22.py](src/solutions/day22.py) |
 | 10 | [Cathode-Ray Tube](https://adventofcode.com/2022/day/10) | [day10.py](src/solutions/day10.py) || 23 | [Unstable Diffusion](https://adventofcode.com/2022/day/23) | [day23.py](src/solutions/day23.py) |
 | 11 | [Monkey in the Middle](https://adventofcode.com/2022/day/11) | [day11.py](src/solutions/day11.py) || 24 | [Blizzard Basin](https://adventofcode.com/2022/day/24) | [day24.py](src/solutions/day24.py) |
-| 12 | [Hill Climbing Algorithm](https://adventofcode.com/2022/day/12) | [day12.py](src/solutions/day12.py) || 25 | [](https://adventofcode.com/2022/day/25) | [](src/solutions/day25.py) |
+| 12 | [Hill Climbing Algorithm](https://adventofcode.com/2022/day/12) | [day12.py](src/solutions/day12.py) || 25 | [Full of Hot Air](https://adventofcode.com/2022/day/25) | [day25.py](src/solutions/day25.py) |
 | 13 | [Distress Signal](https://adventofcode.com/2022/day/13) | [day13.py](src/solutions/day13.py) |
