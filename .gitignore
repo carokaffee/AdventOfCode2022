@@ -1,5 +1,6 @@
 .git
 .vscode
+.venv
 *__pycache__
 session_name.txt
-token.txt
+input??.txt
